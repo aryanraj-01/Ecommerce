@@ -8,10 +8,10 @@ const jwt = require('jsonwebtoken'); // For JSON Web Tokens
 const Product = require('./models/Product'); // Product Model
 const Order = require('./models/Order');     // Order Model
 const User = require('./models/User');       // User Model
-
 const userRoutes = require('./routes/userRoutes');
 const { protect } = require('./middleware/authMiddleware');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
+const path = require('path');
 // const generateToken = require('./utils/generateToken');
 
 const app = express();
@@ -20,6 +20,7 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(cors()); // Enable CORS for frontend communication
 app.use(express.json()); // Parse JSON request bodies
+app.use('/images', express.static(path.join(__dirname, 'Assets', 'images'))); // Serve static files from)
 
 // Database Connection
 mongoose.connect(process.env.MONGO_URI)
@@ -67,7 +68,11 @@ app.get('/api/products', async (req, res) => {
                     name: "Premium Wireless Headphones",
                     description: "Experience immersive sound with our noise-cancelling premium wireless headphones. Enjoy crystal-clear audio and comfortable earcups for hours of listening pleasure.",
                     price: 149.99,
-                    imageUrl: "https://images.unsplash.com/photo-1546435770-d3e498c0b0ed?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    imageUrls: [
+                              "/Images/head1.jpg",
+                              "/Images/head2.jpg",
+                              "/Images/head3.jpg",
+                              ],
                     variants: ["Black", "Silver", "Rose Gold"],
                     inventoryCount: 100
                 },
@@ -75,7 +80,12 @@ app.get('/api/products', async (req, res) => {
                     name: "Ergonomic Office Chair",
                     description: "High-back mesh office chair with lumbar support and adjustable armrests. Perfect for long working hours.",
                     price: 299.99,
-                    imageUrl: "https://images.unsplash.com/photo-1591871232010-d352b27008ca?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    imageUrls: [
+                              "/Images/ochair1.jpg",
+                              "/Images/ochair2.jpg",
+                              "/Images/Ochair3.jpg",
+                              "/Images/Ochair4.jpg",
+                              ],
                     variants: ["Black", "Grey"],
                     inventoryCount: 50
                 },
@@ -83,7 +93,12 @@ app.get('/api/products', async (req, res) => {
                     name: "Smartwatch with Heart Rate Monitor",
                     description: "Track your fitness, receive notifications, and monitor your heart rate with this sleek and functional smartwatch.",
                     price: 89.99,
-                    imageUrl: "https://images.unsplash.com/photo-1523275373859-a9ce8962c5e5?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    imageUrls: [
+                              "/Images/sm1.jpg",
+                              "/Images/sm2.jpg",
+                              "/Images/sm3.jpg",
+                              "/Images/sm4.jpg",
+                              ],
                     variants: ["Sport Band", "Leather Band"],
                     inventoryCount: 75
                 },
@@ -91,7 +106,12 @@ app.get('/api/products', async (req, res) => {
                     name: "Portable Bluetooth Speaker",
                     description: "Compact and powerful speaker with rich bass and crystal-clear highs. Waterproof for outdoor adventures.",
                     price: 59.99,
-                    imageUrl: "https://images.unsplash.com/photo-1545610816-3e4b857732d8?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    imageUrls: [
+                              "/Images/bs1.jpg",
+                              "/Images/bs2.jpg",
+                              "/Images/bs3.jpg",
+                              "/Images/bs4.jpg",
+                              ],
                     variants: ["Black", "Blue", "Red"],
                     inventoryCount: 120
                 },
@@ -99,7 +119,12 @@ app.get('/api/products', async (req, res) => {
                     name: "High-Speed SSD (1TB)",
                     description: "Boost your computer's performance with this ultra-fast 1TB Solid State Drive. Ideal for gaming and professional use.",
                     price: 129.99,
-                    imageUrl: "https://images.unsplash.com/photo-1618251268307-8874945d8b2d?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    imageUrls: [
+                              "/Images/ssd1.jpg",
+                              "/Images/ssd2.jpg",
+                              "/Images/ssd3.jpg",
+                              "/Images/ssd4.jpg",
+                              ],
                     variants: [],
                     inventoryCount: 60
                 },
@@ -107,7 +132,12 @@ app.get('/api/products', async (req, res) => {
                     name: "4K UHD Smart TV (55 inch)",
                     description: "Immerse yourself in stunning visuals with this 55-inch 4K UHD Smart TV. Built-in streaming apps and voice control.",
                     price: 699.99,
-                    imageUrl: "https://images.unsplash.com/photo-1574942006720-7f212260195c?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    imageUrls: [
+                              "/Images/tv1.jpg",
+                              "/Images/tv2.jpg",
+                              "/Images/tv3.jpg",
+                              "/Images/tv4.jpg",
+                              ],
                     variants: [],
                     inventoryCount: 20
                 },
@@ -115,7 +145,11 @@ app.get('/api/products', async (req, res) => {
                     name: "Robot Vacuum Cleaner",
                     description: "Effortlessly clean your home with this smart robot vacuum. Features intelligent navigation and app control.",
                     price: 349.99,
-                    imageUrl: "https://images.unsplash.com/photo-1581729013233-a3b04c86b2d2?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    imageUrls: [
+                              "/Images/vacuum1.jpg",
+                              "/Images/vacuum2.jpg",
+                              "/Images/vacuum3.jpg",
+                              ],
                     variants: [],
                     inventoryCount: 30
                 },
@@ -123,7 +157,11 @@ app.get('/api/products', async (req, res) => {
                     name: "Digital Camera (Mirrorless)",
                     description: "Capture breathtaking photos and videos with this professional mirrorless camera. Includes a versatile zoom lens.",
                     price: 899.99,
-                    imageUrl: "https://images.unsplash.com/photo-1502920514313-52581002a659?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    imageUrls: [
+                          "/images/camera1.jpg",
+                          "/images/camera2.jpg",
+                          "/images/camera3.jpg",
+                            ],
                     variants: [],
                     inventoryCount: 15
                 },
@@ -131,7 +169,11 @@ app.get('/api/products', async (req, res) => {
                     name: "Smart Home Security Camera",
                     description: "Keep your home safe with 1080p HD video, night vision, and motion detection. Easy to install and monitor via app.",
                     price: 79.99,
-                    imageUrl: "https://images.unsplash.com/photo-1596700054737-1422c5496417?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    imageUrls: [
+                              "/images/camera1.jpg",
+                              "/images/camera2.jpg",
+                              "/images/camera3.jpg",
+                              ],
                     variants: [],
                     inventoryCount: 90
                 },
@@ -139,7 +181,11 @@ app.get('/api/products', async (req, res) => {
                     name: "Gaming Laptop (RTX 4070)",
                     description: "Unleash your gaming potential with this powerful laptop featuring an RTX 4070 GPU, i7 processor, and 16GB RAM.",
                     price: 1599.99,
-                    imageUrl: "https://images.unsplash.com/photo-1593642632782-0193ed9fd26b?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    imageUrls: [
+                              "/images/laptop1.jpg",
+                              "/images/laptop2.jpg",
+                              "/images/laptop3.jpg",
+                              ],
                     variants: [],
                     inventoryCount: 10
                 },
@@ -231,6 +277,23 @@ app.get('/api/products', async (req, res) => {
     }
 });
 
+// Route to get a single product by ID (THIS IS CRUCIAL AND MUST BE PRESENT)
+app.get('/api/products/:id', async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id);
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+        res.json(product);
+    } catch (err) {
+        console.error('Error fetching product by ID:', err);
+        // CastError for invalid IDs are common, handle specifically if needed
+        if (err.name === 'CastError') {
+            return res.status(400).json({ message: 'Invalid product ID format.' });
+        }
+        res.status(500).json({ message: 'Server error fetching product.' });
+    }
+});
 
 // --- NEW: Use User Routes from userRoutes.js ---
 // app.use('/api/users', userRoutes); // All routes defined in userRoutes will now be accessible under /api/users
@@ -389,9 +452,9 @@ app.get('/api/order/:orderNumber', protect, async (req, res) => { // Added prote
     } catch (err) { console.error('Error fetching order details:', err); res.status(500).json({ message: 'Server error fetching order details.' }); }
 });
 
-// Error Handling Middleware (AFTER all other routes and middleware) <-- ADD THESE LINES
 app.use(notFound);
 app.use(errorHandler);
+
 
 // Start the server
 app.listen(PORT, () => {
